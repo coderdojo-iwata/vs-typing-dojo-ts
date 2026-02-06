@@ -46,7 +46,7 @@ export function processInput(game: Game, key: string): InputResult {
   if (validation === 'correct') {
     const scored = addScore(player, 1);
     const isLastChunk = player.currentChunkIndex >= sentence.chunks.length - 1;
-    updatedPlayer = isLastChunk ? nextSentence(scored) : nextChunk(scored);
+    updatedPlayer = isLastChunk ? nextSentence(scored) : nextChunk(scored, newInput);
   } else if (validation === 'partial') {
     updatedPlayer = { ...player, currentInput: newInput };
   } else {
@@ -58,7 +58,6 @@ export function processInput(game: Game, key: string): InputResult {
       ? { ...game, player1: updatedPlayer }
       : { ...game, player2: updatedPlayer };
 
-  // 全文打ちきりでゲーム終了
   if (updatedPlayer.currentSentenceIndex >= game.sentences.length) {
     updatedGame = { ...updatedGame, state: 'finished' };
   }

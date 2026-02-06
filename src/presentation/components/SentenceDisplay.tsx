@@ -4,12 +4,14 @@ interface SentenceDisplayProps {
   sentence: Sentence | undefined;
   currentChunkIndex: number;
   currentInput: string;
+  completedPatterns: string[];
 }
 
 export function SentenceDisplay({
   sentence,
   currentChunkIndex,
   currentInput,
+  completedPatterns,
 }: SentenceDisplayProps) {
   if (!sentence) {
     return (
@@ -19,21 +21,21 @@ export function SentenceDisplay({
     );
   }
 
-  // ローマ字の入力済み部分と未入力部分を計算
   let completedRomaji = '';
   let currentRomaji = '';
   let remainingRomaji = '';
 
   for (let i = 0; i < sentence.chunks.length; i++) {
     const chunk = sentence.chunks[i]!;
-    const displayRomaji = chunk.inputPatterns[0]!;
 
     if (i < currentChunkIndex) {
-      completedRomaji += displayRomaji;
+      completedRomaji += completedPatterns[i] ?? chunk.inputPatterns[0]!;
     } else if (i === currentChunkIndex) {
-      currentRomaji = displayRomaji;
+      currentRomaji =
+        chunk.inputPatterns.find((p) => p.startsWith(currentInput)) ??
+        chunk.inputPatterns[0]!;
     } else {
-      remainingRomaji += displayRomaji;
+      remainingRomaji += chunk.inputPatterns[0]!;
     }
   }
 

@@ -42,14 +42,22 @@ describe('Player', () => {
   describe('nextChunk', () => {
     it('チャンクインデックスが1進む', () => {
       const player = createPlayer(1);
-      const updated = nextChunk(player);
+      const updated = nextChunk(player, 'ka');
       expect(updated.currentChunkIndex).toBe(1);
     });
 
     it('入力がリセットされる', () => {
       const player = { ...createPlayer(1), currentInput: 'ka' };
-      const updated = nextChunk(player);
+      const updated = nextChunk(player, 'ka');
       expect(updated.currentInput).toBe('');
+    });
+
+    it('使用パターンが completedPatterns に記録される', () => {
+      const player = createPlayer(1);
+      const p1 = nextChunk(player, 'shi');
+      expect(p1.completedPatterns).toEqual(['shi']);
+      const p2 = nextChunk(p1, 'ka');
+      expect(p2.completedPatterns).toEqual(['shi', 'ka']);
     });
   });
 
@@ -70,6 +78,12 @@ describe('Player', () => {
       const player = { ...createPlayer(1), currentInput: 'shi' };
       const updated = nextSentence(player);
       expect(updated.currentInput).toBe('');
+    });
+
+    it('completedPatterns がリセットされる', () => {
+      const player = { ...createPlayer(1), completedPatterns: ['shi', 'ka'] };
+      const updated = nextSentence(player);
+      expect(updated.completedPatterns).toEqual([]);
     });
   });
 

@@ -19,6 +19,7 @@ export function PlayerArea({ player, sentences, label }: PlayerAreaProps) {
         sentence={currentSentence}
         currentChunkIndex={player.currentChunkIndex}
         currentInput={player.currentInput}
+        completedPatterns={player.completedPatterns}
       />
     </div>
   );
