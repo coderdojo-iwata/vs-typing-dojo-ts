@@ -2,20 +2,30 @@
 
 ## コーディング規約
 
+### コメント
+
+コメントは「コードを読めばわかること」には書かない。コードから読み取れない意図を説明する場合のみ使用する。
+
+```typescript
+const score = 0;
+const isGameOver = state === 'finished';
+
+// RFC 7231 Section 6.5.4 に従いレート制限時は 429 を返す
+if (rateLimited) {
+  return 429;
+}
+```
+
 ### TypeScript
 
 #### 型定義
 
 ```typescript
-// 明示的な型定義を推奨
 const score: number = 0;
 const playerName: string = 'Player 1';
 
-// 型推論が明確な場合は省略可
-const items = ['a', 'b', 'c'];  // string[] と推論される
+const items = ['a', 'b', 'c'];
 
-// any は使用禁止
-// unknown を使い、型ガードで絞り込む
 function processInput(input: unknown): string {
   if (typeof input === 'string') {
     return input;
@@ -97,15 +107,15 @@ const handleKeyDown = (event: KeyboardEvent) => {
 
 ## 命名規則
 
-| 種類 | 規則 | 例 |
-|------|------|-----|
-| 変数・関数 | camelCase | `currentScore`, `calculateScore` |
-| 定数 | UPPER_SNAKE_CASE | `DEFAULT_TIME_LIMIT` |
-| 型・インターフェース | PascalCase | `GameState`, `Player` |
-| コンポーネント | PascalCase | `GameScreen`, `PlayerArea` |
-| ファイル（コンポーネント） | PascalCase | `GameScreen.tsx` |
-| ファイル（その他） | camelCase | `constants.ts`, `useGame.ts` |
-| CSSクラス | Tailwindのユーティリティクラス | `bg-blue-500` |
+| 種類                       | 規則                           | 例                               |
+| -------------------------- | ------------------------------ | -------------------------------- |
+| 変数・関数                 | camelCase                      | `currentScore`, `calculateScore` |
+| 定数                       | UPPER_SNAKE_CASE               | `DEFAULT_TIME_LIMIT`             |
+| 型・インターフェース       | PascalCase                     | `GameState`, `Player`            |
+| コンポーネント             | PascalCase                     | `GameScreen`, `PlayerArea`       |
+| ファイル（コンポーネント） | PascalCase                     | `GameScreen.tsx`                 |
+| ファイル（その他）         | camelCase                      | `constants.ts`, `useGame.ts`     |
+| CSSクラス                  | Tailwindのユーティリティクラス | `bg-blue-500`                    |
 
 ### 意味のある命名
 
@@ -152,8 +162,10 @@ const doSomething = () => { ... };  // 何をする？
 ```typescript
 // src/shared/styles.ts
 export const buttonStyles = {
-  primary: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded',
-  secondary: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded',
+  primary:
+    'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded',
+  secondary:
+    'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded',
 };
 ```
 
@@ -210,11 +222,11 @@ export const buttonStyles = {
 
 ### テストレビュー依頼のタイミング
 
-| 状況 | レビュー依頼 |
-|------|-------------|
-| 新機能のテスト作成時 | 必須 |
-| 既存テストの修正時 | 変更内容による |
-| バグ修正のテスト追加時 | 推奨 |
+| 状況                   | レビュー依頼   |
+| ---------------------- | -------------- |
+| 新機能のテスト作成時   | 必須           |
+| 既存テストの修正時     | 変更内容による |
+| バグ修正のテスト追加時 | 推奨           |
 
 ### レビュー依頼時のチェックリスト
 
@@ -269,10 +281,11 @@ describe('Player', () => {
 });
 ```
 
-### テストの命名
+### テストの構造
+
+describe は2階層まで（ファイル、メソッド）。3階層以上にネストしない。
 
 ```typescript
-// 日本語で「何をテストするか」を明確に
 describe('RomajiConverter', () => {
   describe('convert', () => {
     it('ひらがなをローマ字に変換する', () => { ... });
@@ -281,6 +294,10 @@ describe('RomajiConverter', () => {
   });
 });
 ```
+
+### テストの命名
+
+日本語で「何をテストするか」を明確に記述する。
 
 ### パラメータライズドテスト
 
@@ -313,7 +330,9 @@ describe('RomajiConverter', () => {
       ['ちゅ', ['tyu', 'chu']],
     ])('拗音 "%s" の許容パターンが %s である', (input, expectedPatterns) => {
       const result = RomajiConverter.convert(input);
-      expect(result.inputPatterns).toEqual(expect.arrayContaining(expectedPatterns));
+      expect(result.inputPatterns).toEqual(
+        expect.arrayContaining(expectedPatterns)
+      );
     });
 
     // 促音の変換
@@ -322,7 +341,9 @@ describe('RomajiConverter', () => {
       ['っと', ['tto', 'ltuto', 'ltsuto', 'xtuto', 'xtsuto']],
     ])('促音 "%s" の許容パターンが %s を含む', (input, expectedPatterns) => {
       const result = RomajiConverter.convert(input);
-      expect(result.inputPatterns).toEqual(expect.arrayContaining(expectedPatterns));
+      expect(result.inputPatterns).toEqual(
+        expect.arrayContaining(expectedPatterns)
+      );
     });
   });
 });
@@ -330,25 +351,25 @@ describe('RomajiConverter', () => {
 
 #### パラメータライズドテストを使うべき場面
 
-| 場面 | 例 |
-|------|-----|
-| 入出力のパターンが多い | ローマ字変換、バリデーション |
-| 境界値テスト | 0, 1, 最大値, 最大値+1 |
+| 場面                       | 例                             |
+| -------------------------- | ------------------------------ |
+| 入出力のパターンが多い     | ローマ字変換、バリデーション   |
+| 境界値テスト               | 0, 1, 最大値, 最大値+1         |
 | 複数の入力で同じ結果になる | 「し」→ si, shi, ci すべて正解 |
 
 #### 使わない方がよい場面
 
-| 場面 | 理由 |
-|------|------|
-| テストごとに準備が異なる | 可読性が下がる |
+| 場面                     | 理由                             |
+| ------------------------ | -------------------------------- |
+| テストごとに準備が異なる | 可読性が下がる                   |
 | 失敗時の原因特定が難しい | 個別テストの方がデバッグしやすい |
 
 ### カバレッジ目標
 
-| 層 | 目標 |
-|----|------|
-| Domain | 90%以上 |
-| Application | 80%以上 |
+| 層           | 目標             |
+| ------------ | ---------------- |
+| Domain       | 90%以上          |
+| Application  | 80%以上          |
 | Presentation | 統合テストで補完 |
 
 ## Git規約
@@ -372,15 +393,15 @@ refactor/xxx            # リファクタリング
 
 #### type の種類
 
-| type | 説明 |
-|------|------|
-| feat | 新機能 |
-| fix | バグ修正 |
-| refactor | リファクタリング |
-| test | テスト追加・修正 |
-| docs | ドキュメント |
-| style | コードスタイル（動作に影響なし） |
-| chore | ビルド、設定など |
+| type     | 説明                             |
+| -------- | -------------------------------- |
+| feat     | 新機能                           |
+| fix      | バグ修正                         |
+| refactor | リファクタリング                 |
+| test     | テスト追加・修正                 |
+| docs     | ドキュメント                     |
+| style    | コードスタイル（動作に影響なし） |
+| chore    | ビルド、設定など                 |
 
 #### 例
 

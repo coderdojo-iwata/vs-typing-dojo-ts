@@ -140,6 +140,7 @@ mkdir -p .steering/[YYYYMMDD]-initial-implementation
 
 `.steering/[YYYYMMDD]-initial-implementation/tasklist.md`
 に基づいて実装を進めます。
+タスクの着手・完了時には `tasklist.md` のステータスを随時更新すること。
 
 #### 6. 品質チェック
 
@@ -182,6 +183,7 @@ mkdir -p .steering/20250115-add-tag-feature
 #### 5. 実装開始
 
 `.steering/[YYYYMMDD]-[開発タイトル]/tasklist.md` に基づいて実装を進めます。
+タスクの着手・完了時には `tasklist.md` のステータスを随時更新すること。
 
 #### 6. 品質チェック
 
