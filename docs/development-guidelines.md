@@ -54,7 +54,7 @@ const validateInput = (key: string): boolean => {
 
 ```typescript
 // 名前付きエクスポートを基本とする
-export const GameUseCase = { ... };
+export const InputValidator = { ... };
 export type GameState = 'idle' | 'playing' | 'finished';
 
 // default export は避ける（リファクタリング時に追跡しづらい）
@@ -247,7 +247,7 @@ tests/
 │       └── RomajiConverter.test.ts
 └── application/
     └── usecases/
-        └── GameUseCase.test.ts
+        └── InputUseCase.test.ts
 ```
 
 ### テストの書き方

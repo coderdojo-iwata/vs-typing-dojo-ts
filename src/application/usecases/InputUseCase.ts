@@ -1,11 +1,14 @@
 import type { Game } from '../../domain/entities/Game';
 import type { Player } from '../../domain/entities/Player';
 import { addScore, nextChunk, nextSentence } from '../../domain/entities/Player';
-import { InputValidator } from '../../domain/services/InputValidator';
+import {
+  InputValidator,
+  type ValidationResult,
+} from '../../domain/services/InputValidator';
 
 export interface InputResult {
   game: Game;
-  validation: 'correct' | 'partial' | 'incorrect';
+  validation: ValidationResult;
 }
 
 function getPlayerAndKey(

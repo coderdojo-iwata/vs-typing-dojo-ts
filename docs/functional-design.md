@@ -16,8 +16,8 @@
 │  │                         │                              │ │
 │  │  ┌─────────────────────────────────────────────────┐  │ │
 │  │  │  Application Layer                               │  │ │
-│  │  │  - GameUseCase (ゲーム進行管理)                  │  │ │
 │  │  │  - InputUseCase (入力処理)                       │  │ │
+│  │  │  - gameReducer (ゲーム状態管理)                  │  │ │
 │  │  └─────────────────────────────────────────────────┘  │ │
 │  │                         │                              │ │
 │  │  ┌─────────────────────────────────────────────────┐  │ │
@@ -115,7 +115,7 @@ classDiagram
         +Player player2
         +number remainingTime
         +start()
-        +tick()
+        +tickGame()
         +end()
         +getWinner()
     }
@@ -265,8 +265,8 @@ sentences.json                 RomajiConverter              Sentence
 
 | ユースケース | 責務 |
 |------------|------|
-| `GameUseCase` | ゲーム開始・終了・タイマー管理 |
 | `InputUseCase` | キー入力の振り分け・正誤判定 |
+| `gameReducer` | ゲーム状態遷移の管理 |
 
 ### Domain Layer
 
@@ -350,14 +350,14 @@ sequenceDiagram
     participant U as User
     participant T as TitleScreen
     participant G as GameScreen
-    participant GU as GameUseCase
+    participant GR as gameReducer
     participant IU as InputUseCase
     participant R as ResultModal
 
     U->>T: 開始ボタンクリック
-    T->>GU: startGame()
-    GU->>G: カウントダウン開始 (3, 2, 1)
-    GU->>G: ゲーム開始、タイマースタート
+    T->>GR: dispatch(INIT, START_COUNTDOWN)
+    GR->>G: カウントダウン開始 (3, 2, 1)
+    GR->>G: ゲーム開始、タイマースタート
 
     loop 60秒間 or 全文打ちきりまで
         U->>G: キー入力
@@ -367,7 +367,7 @@ sequenceDiagram
         IU->>G: 状態更新 (全文完了時はfinished)
     end
 
-    GU->>G: タイマー終了 or 全文打ちきり
-    GU->>R: 結果表示
+    GR->>G: タイマー終了 or 全文打ちきり
+    GR->>R: 結果表示
     U->>R: もう一度対戦 or タイトルへ
 ```

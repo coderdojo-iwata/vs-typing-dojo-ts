@@ -1,6 +1,7 @@
 import type { Player } from './Player';
 import { createPlayer } from './Player';
 import type { Sentence } from './Sentence';
+import { GAME_CONFIG } from '../../shared/gameConfig';
 
 export type GameState = 'idle' | 'countdown' | 'playing' | 'finished';
 
@@ -17,7 +18,7 @@ export function createGame(sentences: Sentence[]): Game {
     state: 'idle',
     player1: createPlayer(1),
     player2: createPlayer(2),
-    remainingTime: 60,
+    remainingTime: GAME_CONFIG.DURATION_SECONDS,
     sentences,
   };
 }
@@ -30,7 +31,7 @@ export function startPlaying(game: Game): Game {
   return { ...game, state: 'playing' };
 }
 
-export function tick(game: Game): Game {
+export function tickGame(game: Game): Game {
   const next = Math.max(0, game.remainingTime - 1);
   return {
     ...game,

@@ -3,7 +3,7 @@ import {
   createGame,
   startCountdown,
   startPlaying,
-  tick,
+  tickGame,
   finish,
   getWinner,
 } from '../../../src/domain/entities/Game';
@@ -50,7 +50,7 @@ describe('Game', () => {
       const game = startPlaying(
         startCountdown({ ...createGame(dummySentences), remainingTime: 1 })
       );
-      const updated = tick(game);
+      const updated = tickGame(game);
       expect(updated.state).toBe('finished');
       expect(updated.remainingTime).toBe(0);
     });
@@ -65,7 +65,7 @@ describe('Game', () => {
   describe('tick', () => {
     it('残り時間が1減る', () => {
       const game = startPlaying(startCountdown(createGame(dummySentences)));
-      const updated = tick(game);
+      const updated = tickGame(game);
       expect(updated.remainingTime).toBe(59);
     });
 
@@ -73,7 +73,7 @@ describe('Game', () => {
       const game = startPlaying(
         startCountdown({ ...createGame(dummySentences), remainingTime: 0 })
       );
-      const updated = tick(game);
+      const updated = tickGame(game);
       expect(updated.remainingTime).toBe(0);
     });
   });

@@ -3,9 +3,7 @@ import { useGameContext } from './useGameContext';
 import { LocalSentenceRepository } from '../../infrastructure/repositories/LocalSentenceRepository';
 import { getWinner } from '../../domain/entities/Game';
 import { shuffle } from '../../shared/shuffle';
-
-const COUNTDOWN_MS = 3000;
-const TICK_INTERVAL_MS = 1000;
+import { GAME_CONFIG } from '../../shared/gameConfig';
 
 export function useGame() {
   const { game, dispatch } = useGameContext();
@@ -27,8 +25,8 @@ export function useGame() {
       dispatch({ type: 'START_GAME' });
       timerRef.current = setInterval(() => {
         dispatch({ type: 'TICK' });
-      }, TICK_INTERVAL_MS);
-    }, COUNTDOWN_MS);
+      }, GAME_CONFIG.TICK_INTERVAL_MS);
+    }, GAME_CONFIG.COUNTDOWN_MS);
   }, [dispatch]);
 
   const resetGame = useCallback(() => {

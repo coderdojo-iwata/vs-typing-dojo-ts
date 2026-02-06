@@ -3,7 +3,7 @@ import {
   createGame,
   startCountdown,
   startPlaying,
-  tick as gameTick,
+  tickGame,
   finish,
 } from '../../domain/entities/Game';
 import { processInput } from '../../application/usecases/InputUseCase';
@@ -27,7 +27,7 @@ export function gameReducer(state: Game, action: GameAction): Game {
     case 'START_GAME':
       return startPlaying(state);
     case 'TICK': {
-      return gameTick(state);
+      return tickGame(state);
     }
     case 'INPUT': {
       if (state.state !== 'playing') return state;

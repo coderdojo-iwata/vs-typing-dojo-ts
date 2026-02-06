@@ -29,7 +29,6 @@ vs-typing-dojo-ts/
 │   │       └── SentenceRepository.ts
 │   ├── application/            # Application Layer
 │   │   └── usecases/
-│   │       ├── GameUseCase.ts
 │   │       └── InputUseCase.ts
 │   ├── infrastructure/         # Infrastructure Layer
 │   │   └── repositories/
