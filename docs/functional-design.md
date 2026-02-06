@@ -39,7 +39,7 @@
 stateDiagram-v2
     [*] --> Title: アプリ起動
     Title --> Playing: 開始ボタン押下
-    Playing --> Result: タイマー終了
+    Playing --> Result: タイマー終了 or 全文打ちきり
     Result --> Playing: もう一度対戦
     Result --> Title: タイトルへ戻る
 ```
@@ -338,6 +338,7 @@ flowchart TD
 
 ### なぜ動的解析か
 
+- 出題順は毎回ランダム（両プレイヤーで同じ順番）
 - 課題文の追加が `japanese` と `reading` だけで済む
 - データがシンプルで管理しやすい
 - 将来のAPI連携時も同じ形式で対応可能
@@ -358,15 +359,15 @@ sequenceDiagram
     GU->>G: カウントダウン開始 (3, 2, 1)
     GU->>G: ゲーム開始、タイマースタート
 
-    loop 30秒間
+    loop 60秒間 or 全文打ちきりまで
         U->>G: キー入力
         G->>IU: processInput(key)
         IU->>IU: プレイヤー判定 (大文字/小文字)
         IU->>IU: 正誤判定
-        IU->>G: 状態更新
+        IU->>G: 状態更新 (全文完了時はfinished)
     end
 
-    GU->>G: タイマー終了
+    GU->>G: タイマー終了 or 全文打ちきり
     GU->>R: 結果表示
     U->>R: もう一度対戦 or タイトルへ
 ```

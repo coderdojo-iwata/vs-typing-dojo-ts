@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { createPlayer } from '../../../src/domain/entities/Player';
+import {
+  createPlayer,
+  addScore,
+  nextChunk,
+  nextSentence,
+  resetInput,
+} from '../../../src/domain/entities/Player';
 
 describe('Player', () => {
   describe('createPlayer', () => {

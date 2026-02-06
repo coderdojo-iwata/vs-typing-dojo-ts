@@ -1,7 +1,25 @@
+import { useState, useCallback } from 'react';
+import { GameProvider } from './presentation/contexts/GameContext';
+import { TitleScreen } from './presentation/components/TitleScreen';
+import { GameScreenWrapper } from './presentation/components/GameScreenWrapper';
+
+type Screen = 'title' | 'game';
+
 export const App = () => {
+  const [screen, setScreen] = useState<Screen>('title');
+
+  const handleStart = useCallback(() => {
+    setScreen('game');
+  }, []);
+
+  const handleTitle = useCallback(() => {
+    setScreen('title');
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-gray-800">タイピング道場</h1>
-    </div>
+    <GameProvider>
+      {screen === 'title' && <TitleScreen onStart={handleStart} />}
+      {screen === 'game' && <GameScreenWrapper onTitle={handleTitle} />}
+    </GameProvider>
   );
 };

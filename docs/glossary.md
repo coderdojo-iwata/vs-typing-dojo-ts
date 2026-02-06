@@ -76,7 +76,7 @@
 | 待機中 | Idle | `'idle'` | ゲーム開始前 |
 | カウントダウン中 | Countdown | `'countdown'` | 開始ボタン押下後、ゲーム開始前 |
 | プレイ中 | Playing | `'playing'` | ゲーム進行中 |
-| 終了 | Finished | `'finished'` | タイマー終了後 |
+| 終了 | Finished | `'finished'` | タイマー終了後、または全文打ちきり時 |
 
 ## プレイヤー識別
 
