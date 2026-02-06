@@ -1,0 +1,14 @@
+{
+  "sentences": [
+    { "japanese": "今日はいい天気です", "reading": "きょうはいいてんきです" },
+    { "japanese": "タイピングは楽しい", "reading": "たいぴんぐはたのしい" },
+    { "japanese": "桜の花が咲いた", "reading": "さくらのはながさいた" },
+    { "japanese": "猫が窓辺で寝ている", "reading": "ねこがまどべでねている" },
+    { "japanese": "夏休みに海へ行く", "reading": "なつやすみにうみへいく" },
+    { "japanese": "音楽を聴きながら走る", "reading": "おんがくをききながらはしる" },
+    { "japanese": "本を読むのが好きだ", "reading": "ほんをよむのがすきだ" },
+    { "japanese": "朝ごはんを食べよう", "reading": "あさごはんをたべよう" },
+    { "japanese": "友達と映画を見た", "reading": "ともだちとえいがをみた" },
+    { "japanese": "雪が降り始めた", "reading": "ゆきがふりはじめた" }
+  ]
+}
