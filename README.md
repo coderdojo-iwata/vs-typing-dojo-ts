@@ -47,3 +47,13 @@ npm run dev
 - Vite
 - Vitest
 - Tailwind CSS
+
+## ライセンス
+
+このプロジェクトは MIT ライセンスの下で公開されています。
+
+このプロジェクトは [claude-code-book-chapter4](https://github.com/GenerativeAgents/claude-code-book-chapter4) のコードを基にしています。
+
+MIT License - Copyright (c) 2026 Generative Agents
+
+詳細は [元のライセンス](https://github.com/GenerativeAgents/claude-code-book-chapter4/blob/main/LICENSE) をご確認ください。
