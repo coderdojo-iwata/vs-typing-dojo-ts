@@ -18,12 +18,9 @@
 | Player 1   | Caps Lock OFF（小文字）で入力 |
 | Player 2   | Caps Lock ON（大文字）で入力  |
 
-## 前提条件
+## 起動方法
 
-- [Node.js](https://nodejs.org/) v18 以上
-- npm（Node.js に同梱）
-
-## セットアップ
+[Node.js](https://nodejs.org/) v18 以上をインストールした上で以下のコマンドを実行します。
 
 ```bash
 npm install
