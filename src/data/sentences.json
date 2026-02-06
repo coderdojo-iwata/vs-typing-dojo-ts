@@ -5,10 +5,42 @@
     { "japanese": "桜の花が咲いた", "reading": "さくらのはながさいた" },
     { "japanese": "猫が窓辺で寝ている", "reading": "ねこがまどべでねている" },
     { "japanese": "夏休みに海へ行く", "reading": "なつやすみにうみへいく" },
-    { "japanese": "音楽を聴きながら走る", "reading": "おんがくをききながらはしる" },
+    {
+      "japanese": "音楽を聴きながら走る",
+      "reading": "おんがくをききながらはしる"
+    },
     { "japanese": "本を読むのが好きだ", "reading": "ほんをよむのがすきだ" },
     { "japanese": "朝ごはんを食べよう", "reading": "あさごはんをたべよう" },
     { "japanese": "友達と映画を見た", "reading": "ともだちとえいがをみた" },
-    { "japanese": "雪が降り始めた", "reading": "ゆきがふりはじめた" }
+    { "japanese": "雪が降り始めた", "reading": "ゆきがふりはじめた" },
+    { "japanese": "公園で散歩をする", "reading": "こうえんでさんぽをする" },
+    { "japanese": "新しい靴を買った", "reading": "あたらしいくつをかった" },
+    { "japanese": "お茶を一杯飲む", "reading": "おちゃをいっぱいのむ" },
+    { "japanese": "電車で会社へ行く", "reading": "でんしゃでかいしゃへいく" },
+    { "japanese": "雨が静かに降る", "reading": "あめがしずかにふる" },
+    { "japanese": "夕焼けがきれいだ", "reading": "ゆうやけがきれいだ" },
+    {
+      "japanese": "犬を散歩に連れて行く",
+      "reading": "いぬをさんぽにつれていく"
+    },
+    { "japanese": "早起きは気持ちいい", "reading": "はやおきはきもちいい" },
+    { "japanese": "パンの香りがする", "reading": "ぱんのかおりがする" },
+    { "japanese": "星空を見上げる", "reading": "ほしぞらをみあげる" },
+    {
+      "japanese": "宿題を先に終わらせる",
+      "reading": "しゅくだいをさきにおわらせる"
+    },
+    { "japanese": "風が少し冷たい", "reading": "かぜがすこしつめたい" },
+    { "japanese": "写真をたくさん撮る", "reading": "しゃしんをたくさんとる" },
+    { "japanese": "新しい本を開く", "reading": "あたらしいほんをひらく" },
+    { "japanese": "ピザを分け合う", "reading": "ぴざをわけあう" },
+    { "japanese": "部屋をきれいにする", "reading": "へやをきれいにする" },
+    { "japanese": "時計を確認する", "reading": "とけいをかくにんする" },
+    { "japanese": "ゆっくり深呼吸する", "reading": "ゆっくりしんこきゅうする" },
+    {
+      "japanese": "窓を開けて空気を入れる",
+      "reading": "まどをあけてくうきをいれる"
+    },
+    { "japanese": "今日も頑張ろう", "reading": "きょうもがんばろう" }
   ]
 }
