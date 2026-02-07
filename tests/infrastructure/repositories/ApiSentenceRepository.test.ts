@@ -11,7 +11,7 @@ beforeEach(() => {
 });
 
 describe('ApiSentenceRepository', () => {
-  it('API から取得した文をローマ字変換して返す', async () => {
+  it('API から取得した生データを返す', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue({
@@ -29,8 +29,6 @@ describe('ApiSentenceRepository', () => {
     expect(sentences).toHaveLength(2);
     expect(sentences[0]!.japanese).toBe('テスト文です');
     expect(sentences[0]!.reading).toBe('てすとぶんです');
-    expect(sentences[0]!.romaji).toBeTruthy();
-    expect(sentences[0]!.chunks.length).toBeGreaterThan(0);
   });
 
   it('API キーが Authorization ヘッダーに含まれる', async () => {

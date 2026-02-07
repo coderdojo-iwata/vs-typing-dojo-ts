@@ -1,12 +1,6 @@
 import type { SentenceRepository } from '../../domain/repositories/SentenceRepository';
-import type { Sentence } from '../../domain/entities/Sentence';
-import { RomajiConverter } from '../../domain/services/RomajiConverter';
+import type { RawSentence } from '../../domain/entities/Sentence';
 import { callChatCompletion } from '../api/openaiClient';
-
-interface RawSentence {
-  japanese: string;
-  reading: string;
-}
 
 const PROMPT = `タイピング練習用の日本語の短文を10個生成してください。
 
@@ -28,7 +22,7 @@ export function createApiSentenceRepository(
   apiKey: string
 ): SentenceRepository {
   return {
-    async getSentences(): Promise<Sentence[]> {
+    async getSentences(): Promise<RawSentence[]> {
       const content = await callChatCompletion(apiKey, {
         model: 'gpt-4o-mini',
         messages: [
@@ -53,15 +47,7 @@ export function createApiSentenceRepository(
         throw new Error('APIのレスポンスが不正です。再度お試しください。');
       }
 
-      return rawSentences.map((raw) => {
-        const { romaji, chunks } = RomajiConverter.convert(raw.reading);
-        return {
-          japanese: raw.japanese,
-          reading: raw.reading,
-          romaji,
-          chunks,
-        };
-      });
+      return rawSentences;
     },
   };
 }

@@ -1,5 +1,5 @@
-import type { Sentence } from '../entities/Sentence';
+import type { RawSentence } from '../entities/Sentence';
 
 export interface SentenceRepository {
-  getSentences(): Promise<Sentence[]>;
+  getSentences(): Promise<RawSentence[]>;
 }

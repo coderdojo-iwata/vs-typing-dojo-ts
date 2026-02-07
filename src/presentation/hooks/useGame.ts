@@ -3,9 +3,11 @@ import { useGameContext } from './useGameContext';
 import { LocalSentenceRepository } from '../../infrastructure/repositories/LocalSentenceRepository';
 import { createApiSentenceRepository } from '../../infrastructure/repositories/ApiSentenceRepository';
 import { getWinner } from '../../domain/entities/Game';
+import { RomajiConverter } from '../../domain/services/RomajiConverter';
 import { shuffle } from '../../shared/shuffle';
 import { GAME_CONFIG } from '../../shared/gameConfig';
 import type { SentenceSource } from '../../shared/types';
+import type { RawSentence } from '../../domain/entities/Sentence';
 
 export function useGame() {
   const { game, dispatch } = useGameContext();
@@ -24,7 +26,13 @@ export function useGame() {
         source === 'api' && apiKey
           ? createApiSentenceRepository(apiKey)
           : LocalSentenceRepository;
-      const sentences = shuffle(await repository.getSentences());
+      const rawSentences = await repository.getSentences();
+      const sentences = shuffle(
+        rawSentences.map((raw: RawSentence) => {
+          const { romaji, chunks } = RomajiConverter.convert(raw.reading);
+          return { japanese: raw.japanese, reading: raw.reading, romaji, chunks };
+        })
+      );
       dispatch({ type: 'INIT', sentences });
       dispatch({ type: 'START_COUNTDOWN' });
 

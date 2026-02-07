@@ -1,5 +1,10 @@
 import type { RomajiChunk } from '../services/RomajiConverter';
 
+export interface RawSentence {
+  japanese: string;
+  reading: string;
+}
+
 export interface Sentence {
   /** 日本語表示（例: "今日は天気がいい"） */
   japanese: string;
