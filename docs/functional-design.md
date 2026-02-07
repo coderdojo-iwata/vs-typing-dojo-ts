@@ -282,7 +282,10 @@ sentences.json                 RomajiConverter              Sentence
 
 | クラス | 責務 |
 |-------|------|
-| `SentenceRepository` | 出題データの取得（JSONファイルから） |
+| `SentenceRepository` | 出題データの取得インターフェース |
+| `LocalSentenceRepository` | ローカルJSONから出題データを取得 |
+| `ApiSentenceRepository` | OpenAI APIから出題データを動的生成 |
+| `openaiClient` | OpenAI Chat Completions APIとの通信 |
 
 ## ローマ字変換ロジック
 
@@ -336,12 +339,21 @@ flowchart TD
 - `reading`: ひらがな読み（ローマ字変換の元データ）
 - `romaji` と `chunks` は `RomajiConverter` がアプリ起動時に動的生成
 
+### 出題ソース
+
+| ソース | 説明 |
+|-------|------|
+| ローカル | `sentences.json`（30文）からランダム出題 |
+| ChatGPT API | OpenAI API で毎回異なる10文を動的生成 |
+
+タイトル画面で出題ソースを選択する。ChatGPT API 使用時はユーザーが API キーを設定する必要がある。
+
 ### なぜ動的解析か
 
 - 出題順は毎回ランダム（両プレイヤーで同じ順番）
 - 課題文の追加が `japanese` と `reading` だけで済む
 - データがシンプルで管理しやすい
-- 将来のAPI連携時も同じ形式で対応可能
+- ローカル・API どちらのソースでも同じ形式で対応可能
 
 ## ゲームフロー
 

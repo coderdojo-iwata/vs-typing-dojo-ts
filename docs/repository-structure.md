@@ -31,8 +31,11 @@ vs-typing-dojo-ts/
 │   │   └── usecases/
 │   │       └── InputUseCase.ts
 │   ├── infrastructure/         # Infrastructure Layer
+│   │   ├── api/
+│   │   │   └── openaiClient.ts
 │   │   └── repositories/
-│   │       └── LocalSentenceRepository.ts
+│   │       ├── LocalSentenceRepository.ts
+│   │       └── ApiSentenceRepository.ts
 │   ├── presentation/           # Presentation Layer
 │   │   ├── components/         # Reactコンポーネント
 │   │   │   ├── App.tsx
@@ -42,12 +45,16 @@ vs-typing-dojo-ts/
 │   │   │   ├── SentenceDisplay.tsx
 │   │   │   ├── Timer.tsx
 │   │   │   ├── ScoreBoard.tsx
-│   │   │   └── ResultModal.tsx
+│   │   │   ├── ResultModal.tsx
+│   │   │   └── ApiKeyInput.tsx
 │   │   ├── hooks/              # カスタムフック
 │   │   │   ├── useGame.ts
+│   │   │   ├── useGameContext.ts
+│   │   │   ├── useApiKey.ts
 │   │   │   └── useKeyboardInput.ts
 │   │   └── contexts/           # React Context
-│   │       └── GameContext.tsx
+│   │       ├── GameContext.tsx
+│   │       └── gameReducer.ts
 │   ├── shared/                 # 共通モジュール
 │   │   ├── constants.ts        # 定数
 │   │   └── types.ts            # 共通型定義
@@ -101,6 +108,7 @@ vs-typing-dojo-ts/
 
 | ディレクトリ | 役割 |
 |-------------|------|
+| `api/` | 外部API通信（OpenAI等） |
 | `repositories/` | リポジトリインターフェースの実装 |
 
 ### src/presentation/
@@ -119,8 +127,9 @@ UI層。Reactコンポーネントとフック。
 
 | ファイル | 役割 |
 |---------|------|
-| `constants.ts` | アプリ全体の定数 |
-| `types.ts` | 共通の型定義 |
+| `gameConfig.ts` | ゲーム設定定数 |
+| `shuffle.ts` | 配列シャッフルユーティリティ |
+| `types.ts` | 共通の型定義（SentenceSource等） |
 
 ### tests/
 

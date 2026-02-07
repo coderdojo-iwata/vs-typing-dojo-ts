@@ -189,11 +189,12 @@ class LocalSentenceRepository implements SentenceRepository {
   }
 }
 
-// 将来: APIから取得
+// API: OpenAI ChatGPT APIから取得
+// createApiSentenceRepository(apiKey) でインスタンス生成
 class ApiSentenceRepository implements SentenceRepository {
   async getSentences(): Promise<Sentence[]> {
-    const response = await fetch('/api/sentences');
-    return response.json();
+    // OpenAI Chat Completions API で出題文を生成
+    // RomajiConverter で romaji / chunks を付与
   }
 }
 ```
