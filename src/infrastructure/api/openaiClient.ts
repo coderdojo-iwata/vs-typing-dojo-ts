@@ -1,3 +1,5 @@
+import { API_CONFIG } from '../../shared/apiConfig';
+
 interface ChatMessage {
   role: 'system' | 'user';
   content: string;
@@ -20,7 +22,7 @@ export async function callChatCompletion(
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify(request),
-    signal: AbortSignal.timeout(60000),
+    signal: AbortSignal.timeout(API_CONFIG.TIMEOUT_MS),
   });
 
   if (!response.ok) {
@@ -37,5 +39,9 @@ export async function callChatCompletion(
   }
 
   const data = await response.json();
-  return data.choices[0].message.content;
+  const content = data?.choices?.[0]?.message?.content;
+  if (typeof content !== 'string') {
+    throw new Error('APIから有効なレスポンスを取得できませんでした。');
+  }
+  return content;
 }

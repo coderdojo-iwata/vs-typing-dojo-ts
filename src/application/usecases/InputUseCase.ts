@@ -31,6 +31,19 @@ function getPlayerAndKey(
   return null;
 }
 
+function updateGameWithPlayer(
+  game: Game,
+  playerId: 1 | 2,
+  player: Player,
+  validation: ValidationResult
+): Game {
+  const updated =
+    playerId === 1
+      ? { ...game, player1: player }
+      : { ...game, player2: player };
+  return { ...updated, lastValidation: { playerId, result: validation } };
+}
+
 export function processInput(game: Game, key: string): InputResult {
   const parsed = getPlayerAndKey(game, key);
   if (!parsed) {
@@ -68,17 +81,13 @@ export function processInput(game: Game, key: string): InputResult {
     updatedPlayer = { ...incrementCorrectTypes(player), currentInput: newInput };
   } else {
     const missed = incrementMissTypes(player);
-    const updatedGame: Game =
-      playerId === 1
-        ? { ...game, player1: missed, lastValidation: { playerId, result: 'incorrect' } }
-        : { ...game, player2: missed, lastValidation: { playerId, result: 'incorrect' } };
-    return { game: updatedGame, validation: 'incorrect' };
+    return {
+      game: updateGameWithPlayer(game, playerId, missed, 'incorrect'),
+      validation: 'incorrect',
+    };
   }
 
-  let updatedGame: Game =
-    playerId === 1
-      ? { ...game, player1: updatedPlayer, lastValidation: { playerId, result: validation } }
-      : { ...game, player2: updatedPlayer, lastValidation: { playerId, result: validation } };
+  let updatedGame = updateGameWithPlayer(game, playerId, updatedPlayer, validation);
 
   if (updatedPlayer.currentSentenceIndex >= game.sentences.length) {
     updatedGame = { ...updatedGame, state: 'finished' };

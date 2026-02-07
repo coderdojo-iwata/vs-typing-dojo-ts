@@ -1,14 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useGameContext } from './useGameContext';
-import { LocalSentenceRepository } from '../../infrastructure/repositories/LocalSentenceRepository';
-import { createApiSentenceRepository } from '../../infrastructure/repositories/ApiSentenceRepository';
 import { getWinner } from '../../domain/entities/Game';
-import { RomajiConverter } from '../../domain/services/RomajiConverter';
-import { filterValidSentences } from '../../domain/services/SentenceValidator';
-import { shuffle } from '../../shared/shuffle';
+import { initializeGame } from '../../application/usecases/InitializeGameUseCase';
 import { GAME_CONFIG } from '../../shared/gameConfig';
 import type { SentenceSource } from '../../shared/types';
-import type { RawSentence } from '../../domain/entities/Sentence';
 
 export function useGame() {
   const { game, dispatch, countdownValue, setCountdownValue } = useGameContext();
@@ -27,7 +22,7 @@ export function useGame() {
   }, []);
 
   const startCountdownSequence = useCallback(() => {
-    let count = 3;
+    let count = GAME_CONFIG.COUNTDOWN_VALUE;
     setCountdownValue(count);
     dispatch({ type: 'START_COUNTDOWN' });
 
@@ -45,24 +40,11 @@ export function useGame() {
         }, GAME_CONFIG.TICK_INTERVAL_MS);
       }
     }, 1000);
-  }, [dispatch]);
+  }, [dispatch, setCountdownValue]);
 
   const startGame = useCallback(
     async (source: SentenceSource = 'local', apiKey?: string) => {
-      const repository =
-        source === 'api' && apiKey
-          ? createApiSentenceRepository(apiKey)
-          : LocalSentenceRepository;
-      const rawSentences = filterValidSentences(await repository.getSentences());
-      if (rawSentences.length === 0) {
-        throw new Error('有効な出題文がありません。');
-      }
-      const sentences = shuffle(
-        rawSentences.map((raw: RawSentence) => {
-          const { romaji, chunks } = RomajiConverter.convert(raw.reading);
-          return { japanese: raw.japanese, reading: raw.reading, romaji, chunks };
-        })
-      );
+      const sentences = await initializeGame(source, apiKey);
       dispatch({ type: 'INIT', sentences });
       startCountdownSequence();
     },
@@ -79,7 +61,7 @@ export function useGame() {
     clearTimer();
     setCountdownValue(null);
     dispatch({ type: 'RESET' });
-  }, [dispatch, clearTimer]);
+  }, [dispatch, clearTimer, setCountdownValue]);
 
   useEffect(() => {
     if (game.state === 'finished') {
