@@ -1,17 +1,43 @@
+import { useEffect, useRef, useState } from 'react';
 import { useGame } from '../hooks/useGame';
 import { useKeyboardInput } from '../hooks/useKeyboardInput';
 import { Timer } from './Timer';
 import { PlayerArea } from './PlayerArea';
 import { ResultModal } from './ResultModal';
+import { Countdown } from './Countdown';
 
 interface GameScreenProps {
   onTitle: () => void;
 }
 
 export function GameScreen({ onTitle }: GameScreenProps) {
-  const { game, dispatch, restartGame, resetGame, winner } = useGame();
+  const { game, dispatch, restartGame, resetGame, countdownValue, winner } =
+    useGame();
+  const [flashPlayer1, setFlashPlayer1] = useState(false);
+  const [flashPlayer2, setFlashPlayer2] = useState(false);
+  const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useKeyboardInput(dispatch, game.state === 'playing');
+
+  useEffect(() => {
+    if (!game.lastValidation) return;
+    const { playerId, result } = game.lastValidation;
+    if (result !== 'incorrect') return;
+
+    const setFlash = playerId === 1 ? setFlashPlayer1 : setFlashPlayer2;
+    setFlash(true);
+    if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
+    flashTimerRef.current = setTimeout(() => {
+      setFlash(false);
+      flashTimerRef.current = null;
+    }, 80);
+  }, [game.lastValidation]);
+
+  useEffect(() => {
+    return () => {
+      if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
+    };
+  }, []);
 
   const handleRestart = () => {
     restartGame();
@@ -24,13 +50,7 @@ export function GameScreen({ onTitle }: GameScreenProps) {
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col">
-      {game.state === 'countdown' && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <span className="text-8xl font-bold text-white animate-pulse">
-            Ready...
-          </span>
-        </div>
-      )}
+      {countdownValue !== null && <Countdown value={countdownValue} />}
 
       <Timer remainingTime={game.remainingTime} />
 
@@ -39,12 +59,14 @@ export function GameScreen({ onTitle }: GameScreenProps) {
           player={game.player1}
           sentences={game.sentences}
           label="Player 1"
+          flash={flashPlayer1}
         />
         <div className="border-t border-gray-700" />
         <PlayerArea
           player={game.player2}
           sentences={game.sentences}
           label="Player 2"
+          flash={flashPlayer2}
         />
       </div>
 
@@ -53,6 +75,7 @@ export function GameScreen({ onTitle }: GameScreenProps) {
           player1={game.player1}
           player2={game.player2}
           winner={winner}
+          remainingTime={game.remainingTime}
           onRestart={handleRestart}
           onTitle={handleTitle}
         />
