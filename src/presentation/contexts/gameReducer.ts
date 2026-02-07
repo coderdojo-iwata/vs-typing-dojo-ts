@@ -7,6 +7,7 @@ import {
   finish,
 } from '../../domain/entities/Game';
 import { processInput } from '../../application/usecases/InputUseCase';
+import { shuffle } from '../../shared/shuffle';
 import type { Sentence } from '../../domain/entities/Sentence';
 
 export type GameAction =
@@ -37,7 +38,7 @@ export function gameReducer(state: Game, action: GameAction): Game {
     case 'END_GAME':
       return finish(state);
     case 'RESET':
-      return createGame(state.sentences);
+      return createGame(shuffle(state.sentences));
     default:
       return state;
   }
