@@ -4,6 +4,7 @@ import { LocalSentenceRepository } from '../../infrastructure/repositories/Local
 import { createApiSentenceRepository } from '../../infrastructure/repositories/ApiSentenceRepository';
 import { getWinner } from '../../domain/entities/Game';
 import { RomajiConverter } from '../../domain/services/RomajiConverter';
+import { filterValidSentences } from '../../domain/services/SentenceValidator';
 import { shuffle } from '../../shared/shuffle';
 import { GAME_CONFIG } from '../../shared/gameConfig';
 import type { SentenceSource } from '../../shared/types';
@@ -26,7 +27,10 @@ export function useGame() {
         source === 'api' && apiKey
           ? createApiSentenceRepository(apiKey)
           : LocalSentenceRepository;
-      const rawSentences = await repository.getSentences();
+      const rawSentences = filterValidSentences(await repository.getSentences());
+      if (rawSentences.length === 0) {
+        throw new Error('有効な出題文がありません。');
+      }
       const sentences = shuffle(
         rawSentences.map((raw: RawSentence) => {
           const { romaji, chunks } = RomajiConverter.convert(raw.reading);

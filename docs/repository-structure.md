@@ -24,7 +24,8 @@ vs-typing-dojo-ts/
 │   │   │   └── Sentence.ts
 │   │   ├── services/           # ドメインサービス
 │   │   │   ├── RomajiConverter.ts
-│   │   │   └── InputValidator.ts
+│   │   │   ├── InputValidator.ts
+│   │   │   └── SentenceValidator.ts
 │   │   └── repositories/       # リポジトリインターフェース
 │   │       └── SentenceRepository.ts
 │   ├── application/            # Application Layer

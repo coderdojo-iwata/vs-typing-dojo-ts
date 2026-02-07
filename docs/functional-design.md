@@ -277,6 +277,7 @@ sentences.json                 RomajiConverter              Sentence
 | `Sentence` | 出題文の管理 |
 | `RomajiConverter` | 日本語→ローマ字変換、入力パターン生成 |
 | `InputValidator` | 入力の正誤判定 |
+| `SentenceValidator` | 出題文の利用可能性判定 |
 
 ### Infrastructure Layer
 
