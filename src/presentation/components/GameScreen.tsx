@@ -5,6 +5,7 @@ import { Timer } from './Timer';
 import { PlayerArea } from './PlayerArea';
 import { ResultModal } from './ResultModal';
 import { Countdown } from './Countdown';
+import { GAME_CONFIG } from '../../shared/gameConfig';
 
 interface GameScreenProps {
   onTitle: () => void;
@@ -30,7 +31,7 @@ export function GameScreen({ onTitle }: GameScreenProps) {
     flashTimerRef.current = setTimeout(() => {
       setFlash(false);
       flashTimerRef.current = null;
-    }, 80);
+    }, GAME_CONFIG.FLASH_DURATION_MS);
   }, [game.lastValidation]);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import type { Player } from '../../domain/entities/Player';
-import { GAME_CONFIG } from '../../shared/gameConfig';
+import { calcAccuracy, calcKpm } from '../../domain/services/StatsCalculator';
 
 interface ResultModalProps {
   player1: Player;
@@ -8,18 +8,6 @@ interface ResultModalProps {
   remainingTime: number;
   onRestart: () => void;
   onTitle: () => void;
-}
-
-function calcAccuracy(player: Player): number {
-  const total = player.correctTypes + player.missTypes;
-  if (total === 0) return 0;
-  return Math.round((player.correctTypes / total) * 1000) / 10;
-}
-
-function calcKpm(player: Player, remainingTime: number): number {
-  const elapsed = GAME_CONFIG.DURATION_SECONDS - remainingTime;
-  if (elapsed === 0) return 0;
-  return Math.round((player.correctTypes / elapsed) * 60);
 }
 
 function PlayerStats({

@@ -1,6 +1,7 @@
 import type { SentenceRepository } from '../../domain/repositories/SentenceRepository';
 import type { RawSentence } from '../../domain/entities/Sentence';
 import { callChatCompletion } from '../api/openaiClient';
+import { API_CONFIG } from '../../shared/apiConfig';
 
 const PROMPT = `タイピング練習用の日本語の短文を30個生成してください。
 
@@ -24,7 +25,7 @@ export function createApiSentenceRepository(
   return {
     async getSentences(): Promise<RawSentence[]> {
       const content = await callChatCompletion(apiKey, {
-        model: 'gpt-4o-mini',
+        model: API_CONFIG.MODEL,
         messages: [
           {
             role: 'system',
@@ -33,7 +34,7 @@ export function createApiSentenceRepository(
           },
           { role: 'user', content: PROMPT },
         ],
-        temperature: 0.8,
+        temperature: API_CONFIG.TEMPERATURE,
       });
 
       let rawSentences: RawSentence[];
