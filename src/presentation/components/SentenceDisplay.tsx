@@ -15,7 +15,7 @@ export function SentenceDisplay({
 }: SentenceDisplayProps) {
   if (!sentence) {
     return (
-      <div className="bg-gray-800 rounded-lg p-4 text-center text-gray-500">
+      <div className="bg-gray-800 rounded-lg p-6 text-center text-gray-500 text-2xl">
         全文完了
       </div>
     );
@@ -40,9 +40,9 @@ export function SentenceDisplay({
   }
 
   return (
-    <div className="bg-gray-800 rounded-lg p-4">
-      <p className="text-xl text-white mb-2">{sentence.japanese}</p>
-      <p className="font-mono text-lg">
+    <div className="bg-gray-800 rounded-lg p-6">
+      <p className="text-3xl text-white mb-3">{sentence.japanese}</p>
+      <p className="font-mono text-2xl">
         <span className="text-green-400">{completedRomaji}</span>
         <span className="text-green-400">{currentInput}</span>
         <span className="text-yellow-300 underline">
