@@ -9,13 +9,12 @@ interface GameScreenProps {
 }
 
 export function GameScreen({ onTitle }: GameScreenProps) {
-  const { game, dispatch, startGame, resetGame, winner } = useGame();
+  const { game, dispatch, restartGame, resetGame, winner } = useGame();
 
   useKeyboardInput(dispatch, game.state === 'playing');
 
-  const handleRestart = async () => {
-    resetGame();
-    await startGame();
+  const handleRestart = () => {
+    restartGame();
   };
 
   const handleTitle = () => {

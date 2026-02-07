@@ -20,7 +20,7 @@ export async function callChatCompletion(
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify(request),
-    signal: AbortSignal.timeout(15000),
+    signal: AbortSignal.timeout(60000),
   });
 
   if (!response.ok) {

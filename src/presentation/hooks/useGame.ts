@@ -46,6 +46,19 @@ export function useGame() {
     [dispatch]
   );
 
+  const restartGame = useCallback(() => {
+    clearTimer();
+    dispatch({ type: 'RESET' });
+    dispatch({ type: 'START_COUNTDOWN' });
+
+    setTimeout(() => {
+      dispatch({ type: 'START_GAME' });
+      timerRef.current = setInterval(() => {
+        dispatch({ type: 'TICK' });
+      }, GAME_CONFIG.TICK_INTERVAL_MS);
+    }, GAME_CONFIG.COUNTDOWN_MS);
+  }, [dispatch, clearTimer]);
+
   const resetGame = useCallback(() => {
     clearTimer();
     dispatch({ type: 'RESET' });
@@ -65,6 +78,7 @@ export function useGame() {
     game,
     dispatch,
     startGame,
+    restartGame,
     resetGame,
     winner: game.state === 'finished' ? getWinner(game) : null,
   };
