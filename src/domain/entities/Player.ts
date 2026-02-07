@@ -5,6 +5,9 @@ export interface Player {
   readonly currentChunkIndex: number;
   readonly currentInput: string;
   readonly completedPatterns: string[];
+  readonly correctTypes: number;
+  readonly missTypes: number;
+  readonly hasMissedCurrentSentence: boolean;
 }
 
 export function createPlayer(id: 1 | 2): Player {
@@ -15,6 +18,9 @@ export function createPlayer(id: 1 | 2): Player {
     currentChunkIndex: 0,
     currentInput: '',
     completedPatterns: [],
+    correctTypes: 0,
+    missTypes: 0,
+    hasMissedCurrentSentence: false,
   };
 }
 
@@ -38,7 +44,16 @@ export function nextSentence(player: Player): Player {
     currentChunkIndex: 0,
     currentInput: '',
     completedPatterns: [],
+    hasMissedCurrentSentence: false,
   };
+}
+
+export function incrementCorrectTypes(player: Player): Player {
+  return { ...player, correctTypes: player.correctTypes + 1 };
+}
+
+export function incrementMissTypes(player: Player): Player {
+  return { ...player, missTypes: player.missTypes + 1, hasMissedCurrentSentence: true };
 }
 
 export function resetInput(player: Player): Player {

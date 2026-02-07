@@ -2,4 +2,5 @@ export const GAME_CONFIG = {
   DURATION_SECONDS: 60,
   COUNTDOWN_MS: 3000,
   TICK_INTERVAL_MS: 1000,
+  NO_MISS_BONUS: 10,
 } as const;

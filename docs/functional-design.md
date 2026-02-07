@@ -90,16 +90,18 @@ stateDiagram-v2
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                                                     │
 │                   結果発表                          │
-│                                                     │
 │              Player 1 の勝ち!                       │
 │                                                     │
-│         Player 1: 250 点                            │
-│         Player 2: 180 点                            │
+│   Player 1              │  Player 2                 │
+│   スコア       250 点   │  スコア       180 点      │
+│   完了文数       5 文   │  完了文数       3 文      │
+│   正タイプ数    120     │  正タイプ数     85        │
+│   ミスタイプ数    8     │  ミスタイプ数   12        │
+│   成功率      93.8%     │  成功率      87.6%        │
+│   KPM          150      │  KPM          112         │
 │                                                     │
 │         [ もう一度対戦 ]  [ タイトルへ ]            │
-│                                                     │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -153,6 +155,9 @@ interface Player {
   currentSentence: Sentence;
   currentChunkIndex: number;   // 現在入力中のchunkのインデックス
   currentInput: string;        // 現在のchunkに対する入力中の文字列
+  correctTypes: number;        // 正タイプ数
+  missTypes: number;           // ミスタイプ数
+  hasMissedCurrentSentence: boolean; // 現在の文でミスしたか（ノーミスボーナス判定用）
 }
 
 // 出題文
@@ -229,6 +234,10 @@ interface Game {
   player1: Player;
   player2: Player;
   remainingTime: number;    // 秒
+  lastValidation?: {        // 直近の入力結果（誤入力フラッシュ表示用）
+    playerId: 1 | 2;
+    result: ValidationResult;
+  };
 }
 ```
 
@@ -254,12 +263,13 @@ sentences.json                 RomajiConverter              Sentence
 |--------------|------|
 | `App` | ルートコンポーネント、画面切り替え |
 | `TitleScreen` | タイトル画面、開始ボタン |
-| `GameScreen` | ゲーム画面全体のレイアウト |
-| `PlayerArea` | 各プレイヤーのタイピングエリア |
+| `GameScreen` | ゲーム画面全体のレイアウト、flash state 管理 |
+| `PlayerArea` | 各プレイヤーのタイピングエリア、誤入力フラッシュ表示 |
 | `SentenceDisplay` | 出題文とローマ字の表示 |
+| `Countdown` | カウントダウン表示（3→2→1、縮小アニメーション） |
 | `Timer` | 残り時間表示 |
 | `ScoreBoard` | スコア表示 |
-| `ResultModal` | 結果表示モーダル |
+| `ResultModal` | 結果表示モーダル（成績詳細表示） |
 
 ### Application Layer
 

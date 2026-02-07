@@ -1,10 +1,17 @@
 import type { Game } from '../../domain/entities/Game';
 import type { Player } from '../../domain/entities/Player';
-import { addScore, nextChunk, nextSentence } from '../../domain/entities/Player';
+import {
+  addScore,
+  nextChunk,
+  nextSentence,
+  incrementCorrectTypes,
+  incrementMissTypes,
+} from '../../domain/entities/Player';
 import {
   InputValidator,
   type ValidationResult,
 } from '../../domain/services/InputValidator';
+import { GAME_CONFIG } from '../../shared/gameConfig';
 
 export interface InputResult {
   game: Game;
@@ -47,19 +54,31 @@ export function processInput(game: Game, key: string): InputResult {
   let updatedPlayer: Player;
 
   if (validation === 'correct') {
-    const scored = addScore(player, 1);
+    let scored = addScore(incrementCorrectTypes(player), 1);
     const isLastChunk = player.currentChunkIndex >= sentence.chunks.length - 1;
-    updatedPlayer = isLastChunk ? nextSentence(scored) : nextChunk(scored, newInput);
+    if (isLastChunk) {
+      if (!scored.hasMissedCurrentSentence) {
+        scored = addScore(scored, GAME_CONFIG.NO_MISS_BONUS);
+      }
+      updatedPlayer = nextSentence(scored);
+    } else {
+      updatedPlayer = nextChunk(scored, newInput);
+    }
   } else if (validation === 'partial') {
-    updatedPlayer = { ...player, currentInput: newInput };
+    updatedPlayer = { ...incrementCorrectTypes(player), currentInput: newInput };
   } else {
-    return { game, validation: 'incorrect' };
+    const missed = incrementMissTypes(player);
+    const updatedGame: Game =
+      playerId === 1
+        ? { ...game, player1: missed, lastValidation: { playerId, result: 'incorrect' } }
+        : { ...game, player2: missed, lastValidation: { playerId, result: 'incorrect' } };
+    return { game: updatedGame, validation: 'incorrect' };
   }
 
   let updatedGame: Game =
     playerId === 1
-      ? { ...game, player1: updatedPlayer }
-      : { ...game, player2: updatedPlayer };
+      ? { ...game, player1: updatedPlayer, lastValidation: { playerId, result: validation } }
+      : { ...game, player2: updatedPlayer, lastValidation: { playerId, result: validation } };
 
   if (updatedPlayer.currentSentenceIndex >= game.sentences.length) {
     updatedGame = { ...updatedGame, state: 'finished' };

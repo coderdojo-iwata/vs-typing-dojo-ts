@@ -5,6 +5,8 @@ import {
   nextChunk,
   nextSentence,
   resetInput,
+  incrementCorrectTypes,
+  incrementMissTypes,
 } from '../../../src/domain/entities/Player';
 
 describe('Player', () => {
@@ -16,6 +18,9 @@ describe('Player', () => {
       expect(player.currentSentenceIndex).toBe(0);
       expect(player.currentChunkIndex).toBe(0);
       expect(player.currentInput).toBe('');
+      expect(player.correctTypes).toBe(0);
+      expect(player.missTypes).toBe(0);
+      expect(player.hasMissedCurrentSentence).toBe(false);
     });
   });
 
@@ -84,6 +89,34 @@ describe('Player', () => {
       const player = { ...createPlayer(1), completedPatterns: ['shi', 'ka'] };
       const updated = nextSentence(player);
       expect(updated.completedPatterns).toEqual([]);
+    });
+
+    it('hasMissedCurrentSentence がリセットされる', () => {
+      const player = { ...createPlayer(1), hasMissedCurrentSentence: true };
+      const updated = nextSentence(player);
+      expect(updated.hasMissedCurrentSentence).toBe(false);
+    });
+  });
+
+  describe('incrementCorrectTypes', () => {
+    it('correctTypes が1増える', () => {
+      const player = createPlayer(1);
+      const updated = incrementCorrectTypes(player);
+      expect(updated.correctTypes).toBe(1);
+    });
+  });
+
+  describe('incrementMissTypes', () => {
+    it('missTypes が1増える', () => {
+      const player = createPlayer(1);
+      const updated = incrementMissTypes(player);
+      expect(updated.missTypes).toBe(1);
+    });
+
+    it('hasMissedCurrentSentence が true になる', () => {
+      const player = createPlayer(1);
+      const updated = incrementMissTypes(player);
+      expect(updated.hasMissedCurrentSentence).toBe(true);
     });
   });
 

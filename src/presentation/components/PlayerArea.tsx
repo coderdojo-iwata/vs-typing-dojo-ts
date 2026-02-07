@@ -7,13 +7,18 @@ interface PlayerAreaProps {
   player: Player;
   sentences: Sentence[];
   label: string;
+  flash?: boolean;
 }
 
-export function PlayerArea({ player, sentences, label }: PlayerAreaProps) {
+export function PlayerArea({ player, sentences, label, flash }: PlayerAreaProps) {
   const currentSentence = sentences[player.currentSentenceIndex];
 
   return (
-    <div className="p-4">
+    <div
+      className={`p-4 rounded-lg transition-colors duration-200 ${
+        flash ? 'bg-red-900/50' : ''
+      }`}
+    >
       <ScoreBoard playerLabel={label} score={player.score} />
       <SentenceDisplay
         sentence={currentSentence}

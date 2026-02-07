@@ -1,9 +1,15 @@
 import type { Player } from './Player';
 import { createPlayer } from './Player';
 import type { Sentence } from './Sentence';
+import type { ValidationResult } from '../services/InputValidator';
 import { GAME_CONFIG } from '../../shared/gameConfig';
 
 export type GameState = 'idle' | 'countdown' | 'playing' | 'finished';
+
+export interface LastValidation {
+  playerId: 1 | 2;
+  result: ValidationResult;
+}
 
 export interface Game {
   readonly state: GameState;
@@ -11,6 +17,7 @@ export interface Game {
   readonly player2: Player;
   readonly remainingTime: number;
   readonly sentences: Sentence[];
+  readonly lastValidation?: LastValidation;
 }
 
 export function createGame(sentences: Sentence[]): Game {
