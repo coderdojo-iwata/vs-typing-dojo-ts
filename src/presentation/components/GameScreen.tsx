@@ -52,9 +52,8 @@ export function GameScreen({ onTitle }: GameScreenProps) {
     <div className="min-h-screen bg-gray-900 flex flex-col">
       {countdownValue !== null && <Countdown value={countdownValue} />}
 
-      <Timer remainingTime={game.remainingTime} />
-
       <div className="flex-1 flex flex-col justify-center gap-4 px-4 max-w-4xl mx-auto w-full">
+        <Timer remainingTime={game.remainingTime} />
         <PlayerArea
           player={game.player1}
           sentences={game.sentences}
