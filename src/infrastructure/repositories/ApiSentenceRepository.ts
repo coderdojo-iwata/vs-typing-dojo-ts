@@ -2,7 +2,7 @@ import type { SentenceRepository } from '../../domain/repositories/SentenceRepos
 import type { RawSentence } from '../../domain/entities/Sentence';
 import { callChatCompletion } from '../api/openaiClient';
 
-const PROMPT = `タイピング練習用の日本語の短文を10個生成してください。
+const PROMPT = `タイピング練習用の日本語の短文を30個生成してください。
 
 条件:
 - 各文は10〜25文字程度
