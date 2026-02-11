@@ -8,9 +8,10 @@ interface PlayerAreaProps {
   sentences: Sentence[];
   label: string;
   flash?: boolean;
+  isPlaying: boolean;
 }
 
-export function PlayerArea({ player, sentences, label, flash }: PlayerAreaProps) {
+export function PlayerArea({ player, sentences, label, flash, isPlaying }: PlayerAreaProps) {
   const currentSentence = sentences[player.currentSentenceIndex];
 
   return (
@@ -20,12 +21,18 @@ export function PlayerArea({ player, sentences, label, flash }: PlayerAreaProps)
       }`}
     >
       <ScoreBoard playerLabel={label} score={player.score} />
-      <SentenceDisplay
-        sentence={currentSentence}
-        currentChunkIndex={player.currentChunkIndex}
-        currentInput={player.currentInput}
-        completedPatterns={player.completedPatterns}
-      />
+      {isPlaying ? (
+        <SentenceDisplay
+          sentence={currentSentence}
+          currentChunkIndex={player.currentChunkIndex}
+          currentInput={player.currentInput}
+          completedPatterns={player.completedPatterns}
+        />
+      ) : (
+        <div className="bg-gray-800 rounded-lg p-6 text-center text-gray-500 text-2xl">
+          &nbsp;
+        </div>
+      )}
     </div>
   );
 }

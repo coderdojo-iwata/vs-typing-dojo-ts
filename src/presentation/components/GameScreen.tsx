@@ -60,6 +60,7 @@ export function GameScreen({ onTitle }: GameScreenProps) {
           sentences={game.sentences}
           label="Player 1"
           flash={flashPlayer1}
+          isPlaying={game.state === 'playing'}
         />
         <div className="border-t border-gray-700" />
         <PlayerArea
@@ -67,6 +68,7 @@ export function GameScreen({ onTitle }: GameScreenProps) {
           sentences={game.sentences}
           label="Player 2"
           flash={flashPlayer2}
+          isPlaying={game.state === 'playing'}
         />
       </div>
 
