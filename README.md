@@ -3,6 +3,8 @@
 同じ PC 上で 2 人が同時に対戦できるタイピングゲームです。
 2 つのキーボードを使い、片方だけ Caps Lock を ON にして遊びます。
 
+<img src="docs/images/screenshot.png" alt="ゲーム画面" width="600">
+
 ## 遊び方
 
 1. **対戦開始** ボタンを押す
