@@ -5,7 +5,7 @@
 
 <img src="docs/images/screenshot.png" alt="ゲーム画面" width="600">
 
-> **[▶ ブラウザですぐに遊ぶ](https://coderdojo-iwata.github.io/vs-typing-dojo-ts/)**
+**[▶ ブラウザですぐに遊ぶ](https://coderdojo-iwata.github.io/vs-typing-dojo-ts/)**
 
 ## 遊び方
 
