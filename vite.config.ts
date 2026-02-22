@@ -6,6 +6,9 @@ import path from 'path';
 export default defineConfig({
   base: '/vs-typing-dojo-ts/',
   plugins: [react()],
+  server: {
+    host: true,
+  },
   resolve: {
     alias: {
       '@domain': path.resolve(__dirname, './src/domain'),

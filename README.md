@@ -24,6 +24,22 @@
 
 ## 起動方法
 
+### Dev Container を使う（推奨）
+
+[Dev Containers 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) をインストールした VS Code と [Docker](https://www.docker.com/) があれば、環境構築なしで開発を始められます。
+
+1. VS Code でリポジトリを開く
+2. コマンドパレット（`Ctrl+Shift+P` / `Cmd+Shift+P`）で **Dev Containers: Reopen in Container** を選択
+3. コンテナのビルド完了後、ターミナルで以下を実行
+
+```bash
+npm run dev
+```
+
+ブラウザで http://localhost:5173 を開きます（ポートが自動フォワードされます）。
+
+### ローカル環境で使う
+
 [Node.js](https://nodejs.org/) v18 以上をインストールした上で以下のコマンドを実行します。
 
 ```bash
