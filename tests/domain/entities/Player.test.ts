@@ -4,7 +4,6 @@ import {
   addScore,
   nextChunk,
   nextSentence,
-  resetInput,
   incrementCorrectTypes,
   incrementMissTypes,
 } from '../../../src/domain/entities/Player';
@@ -120,11 +119,4 @@ describe('Player', () => {
     });
   });
 
-  describe('resetInput', () => {
-    it('入力がリセットされる', () => {
-      const player = { ...createPlayer(1), currentInput: 'ky' };
-      const updated = resetInput(player);
-      expect(updated.currentInput).toBe('');
-    });
-  });
 });

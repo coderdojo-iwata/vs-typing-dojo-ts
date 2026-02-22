@@ -43,10 +43,6 @@ export function GameScreen({ onTitle, soundEnabled }: GameScreenProps) {
     };
   }, []);
 
-  const handleRestart = () => {
-    restartGame();
-  };
-
   const handleTitle = () => {
     resetGame();
     onTitle();
@@ -81,7 +77,7 @@ export function GameScreen({ onTitle, soundEnabled }: GameScreenProps) {
           player2={game.player2}
           winner={winner}
           remainingTime={game.remainingTime}
-          onRestart={handleRestart}
+          onRestart={restartGame}
           onTitle={handleTitle}
         />
       )}

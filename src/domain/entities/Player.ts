@@ -55,7 +55,3 @@ export function incrementCorrectTypes(player: Player): Player {
 export function incrementMissTypes(player: Player): Player {
   return { ...player, missTypes: player.missTypes + 1, hasMissedCurrentSentence: true };
 }
-
-export function resetInput(player: Player): Player {
-  return { ...player, currentInput: '' };
-}
