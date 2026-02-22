@@ -13,6 +13,9 @@ dist-ssr
 
 # Editor directories and files
 *.local
+
+# Project-specific additions
+.claude/settings.local.json
 *.suo
 *.ntvs*
 *.njsproj
