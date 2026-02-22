@@ -51,8 +51,16 @@ stateDiagram-v2
 ```
 ┌─────────────────────────────────────────────────────┐
 │                                                     │
-│                                                     │
 │               タイピング道場                         │
+│                                                     │
+│         出題ソース                                  │
+│         ○ ローカル  ○ ChatGPT API                  │
+│                                                     │
+│         ゲーム時間                                  │
+│         [ 10秒 ] [■ 30秒 ■] [ 60秒 ]              │
+│                                                     │
+│         サウンド                                    │
+│         🔊 ON                                       │
 │                                                     │
 │           [ 対戦開始 ]                              │
 │                                                     │
@@ -115,6 +123,7 @@ classDiagram
         +GameState state
         +Player player1
         +Player player2
+        +number duration
         +number remainingTime
         +start()
         +tickGame()
@@ -233,7 +242,8 @@ interface Game {
   state: GameState;
   player1: Player;
   player2: Player;
-  remainingTime: number;    // 秒
+  duration: number;         // ゲーム時間（秒）: 10 | 30 | 60
+  remainingTime: number;    // 残り時間（秒）
   lastValidation?: {        // 直近の入力結果（誤入力フラッシュ表示用）
     playerId: 1 | 2;
     result: ValidationResult;
@@ -382,7 +392,7 @@ sequenceDiagram
     GR->>G: カウントダウン開始 (3, 2, 1)
     GR->>G: ゲーム開始、タイマースタート
 
-    loop 60秒間 or 全文打ちきりまで
+    loop 選択した時間（10/30/60秒）or 全文打ちきりまで
         U->>G: キー入力
         G->>IU: processInput(key)
         IU->>IU: プレイヤー判定 (大文字/小文字)
