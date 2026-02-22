@@ -54,16 +54,10 @@ export function TitleScreen({ onStart, soundEnabled, onToggleSound }: TitleScree
 
         <div className="space-y-2">
           <p className="text-sm text-gray-400">サウンド</p>
-          <button
-            onClick={onToggleSound}
-            className={`w-full py-2 px-4 rounded-lg font-semibold transition-colors ${
-              soundEnabled
-                ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
-            }`}
-          >
-            {soundEnabled ? 'ON' : 'OFF'}
-          </button>
+          <label className="flex items-center gap-2 cursor-pointer" onClick={onToggleSound}>
+            <span className="text-xl">{soundEnabled ? '🔊' : '🔇'}</span>
+            <span>{soundEnabled ? 'ON' : 'OFF'}</span>
+          </label>
         </div>
       </div>
 
