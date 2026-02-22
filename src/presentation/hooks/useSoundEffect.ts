@@ -19,13 +19,12 @@ function playPop(ctx: AudioContext, startTime: number) {
   const gain = ctx.createGain();
   osc.connect(gain);
   gain.connect(ctx.destination);
-  osc.type = 'triangle';
-  osc.frequency.setValueAtTime(1200, startTime);
-  osc.frequency.exponentialRampToValueAtTime(800, startTime + 0.04);
-  gain.gain.setValueAtTime(0.3, startTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.04);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(880, startTime);
+  gain.gain.setValueAtTime(0.18, startTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.05);
   osc.start(startTime);
-  osc.stop(startTime + 0.04);
+  osc.stop(startTime + 0.05);
 }
 
 function playSound(ctx: AudioContext, lastValidation: LastValidation) {
@@ -45,18 +44,8 @@ function playSound(ctx: AudioContext, lastValidation: LastValidation) {
     // 正しい入力: ポップ音
     playPop(ctx, now);
   } else {
-    // 不正解: 下降ブザー
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(220, now);
-    osc.frequency.linearRampToValueAtTime(110, now + 0.15);
-    gain.gain.setValueAtTime(0.25, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-    osc.start(now);
-    osc.stop(now + 0.18);
+    // 不正解: 下降ビープ
+    playBeep(ctx, 330, 0.12, now);
   }
 }
 
