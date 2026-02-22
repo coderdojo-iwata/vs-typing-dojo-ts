@@ -26,8 +26,7 @@ jobs:
               repo: context.repo.repo,
               username: context.payload.pull_request.user.login,
             });
-            const allowed = ['admin', 'maintain', 'write'];
-            const isAdmin = allowed.includes(data.permission);
+            const isAdmin = data.permission === 'admin';
             core.setOutput('is-admin', String(isAdmin));
 
   claude-review:
@@ -35,9 +34,9 @@ jobs:
     if: needs.check-permission.outputs.is-admin == 'true'
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
-      issues: write
+      contents: read
+      pull-requests: read
+      issues: read
       id-token: write
 
     steps:
