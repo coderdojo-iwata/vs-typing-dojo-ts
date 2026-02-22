@@ -13,6 +13,7 @@
     }
   },
   "features": {
+    "ghcr.io/devcontainers/features/github-cli": {},
     "ghcr.io/stu-bell/devcontainer-features/claude-code": {}
   },
   "postCreateCommand": "npm install",
