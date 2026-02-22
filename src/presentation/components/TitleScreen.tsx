@@ -5,9 +5,11 @@ import { useState } from 'react';
 
 interface TitleScreenProps {
   onStart: (source: SentenceSource, apiKey?: string) => void;
+  soundEnabled: boolean;
+  onToggleSound: () => void;
 }
 
-export function TitleScreen({ onStart }: TitleScreenProps) {
+export function TitleScreen({ onStart, soundEnabled, onToggleSound }: TitleScreenProps) {
   const [source, setSource] = useState<SentenceSource>('local');
   const { apiKey, saveApiKey, clearApiKey, hasApiKey } = useApiKey();
 
@@ -49,6 +51,20 @@ export function TitleScreen({ onStart }: TitleScreenProps) {
             onClear={clearApiKey}
           />
         )}
+
+        <div className="space-y-2">
+          <p className="text-sm text-gray-400">サウンド</p>
+          <button
+            onClick={onToggleSound}
+            className={`w-full py-2 px-4 rounded-lg font-semibold transition-colors ${
+              soundEnabled
+                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+            }`}
+          >
+            {soundEnabled ? 'ON' : 'OFF'}
+          </button>
+        </div>
       </div>
 
       <button
