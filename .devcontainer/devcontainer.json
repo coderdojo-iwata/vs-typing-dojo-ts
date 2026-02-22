@@ -12,6 +12,9 @@
       "onAutoForward": "notify"
     }
   },
+  "features": {
+    "ghcr.io/stu-bell/devcontainer-features/claude-code": {}
+  },
   "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
