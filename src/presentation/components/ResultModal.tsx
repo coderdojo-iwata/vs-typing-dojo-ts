@@ -6,6 +6,7 @@ interface ResultModalProps {
   player2: Player;
   winner: Player | null;
   remainingTime: number;
+  duration: number;
   onRestart: () => void;
   onTitle: () => void;
 }
@@ -14,13 +15,15 @@ function PlayerStats({
   player,
   label,
   remainingTime,
+  duration,
 }: {
   player: Player;
   label: string;
   remainingTime: number;
+  duration: number;
 }) {
   const accuracy = calcAccuracy(player);
-  const kpm = calcKpm(player, remainingTime);
+  const kpm = calcKpm(player, remainingTime, duration);
 
   return (
     <div className="text-left">
@@ -62,6 +65,7 @@ export function ResultModal({
   player2,
   winner,
   remainingTime,
+  duration,
   onRestart,
   onTitle,
 }: ResultModalProps) {
@@ -76,8 +80,8 @@ export function ResultModal({
         <p className="text-2xl font-bold mb-6 text-yellow-400">{resultText}</p>
 
         <div className="grid grid-cols-2 gap-6 mb-8">
-          <PlayerStats player={player1} label="Player 1" remainingTime={remainingTime} />
-          <PlayerStats player={player2} label="Player 2" remainingTime={remainingTime} />
+          <PlayerStats player={player1} label="Player 1" remainingTime={remainingTime} duration={duration} />
+          <PlayerStats player={player2} label="Player 2" remainingTime={remainingTime} duration={duration} />
         </div>
 
         <div className="flex gap-4 justify-center">

@@ -28,7 +28,7 @@ describe('Game', () => {
     it('初期状態が idle である', () => {
       const game = createGame(dummySentences);
       expect(game.state).toBe('idle');
-      expect(game.remainingTime).toBe(60);
+      expect(game.remainingTime).toBe(30);
       expect(game.sentences).toBe(dummySentences);
     });
   });
@@ -66,7 +66,7 @@ describe('Game', () => {
     it('残り時間が1減る', () => {
       const game = startPlaying(startCountdown(createGame(dummySentences)));
       const updated = tickGame(game);
-      expect(updated.remainingTime).toBe(59);
+      expect(updated.remainingTime).toBe(29);
     });
 
     it('残り時間が0以下にならない', () => {
@@ -84,6 +84,7 @@ describe('Game', () => {
         state: 'finished',
         player1: { ...createPlayer(1), score: 10 },
         player2: { ...createPlayer(2), score: 5 },
+        duration: 30,
         remainingTime: 0,
         sentences: dummySentences,
       };
@@ -95,6 +96,7 @@ describe('Game', () => {
         state: 'finished',
         player1: { ...createPlayer(1), score: 3 },
         player2: { ...createPlayer(2), score: 7 },
+        duration: 30,
         remainingTime: 0,
         sentences: dummySentences,
       };
@@ -106,6 +108,7 @@ describe('Game', () => {
         state: 'finished',
         player1: { ...createPlayer(1), score: 5 },
         player2: { ...createPlayer(2), score: 5 },
+        duration: 30,
         remainingTime: 0,
         sentences: dummySentences,
       };

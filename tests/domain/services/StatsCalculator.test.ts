@@ -29,17 +29,17 @@ describe('StatsCalculator', () => {
 
   describe('calcKpm', () => {
     it('経過時間が 0 の場合は 0 を返す', () => {
-      expect(calcKpm(playerWith({ correctTypes: 100 }), 60)).toBe(0);
+      expect(calcKpm(playerWith({ correctTypes: 100 }), 60, 60)).toBe(0);
     });
 
     it('正タイプ数と経過時間から KPM を計算する', () => {
       // 経過30秒、正タイプ60 → 60/30*60 = 120
-      expect(calcKpm(playerWith({ correctTypes: 60 }), 30)).toBe(120);
+      expect(calcKpm(playerWith({ correctTypes: 60 }), 30, 60)).toBe(120);
     });
 
     it('整数に丸められる', () => {
       // 経過40秒、正タイプ50 → 50/40*60 = 75
-      expect(calcKpm(playerWith({ correctTypes: 50 }), 20)).toBe(75);
+      expect(calcKpm(playerWith({ correctTypes: 50 }), 20, 60)).toBe(75);
     });
   });
 });

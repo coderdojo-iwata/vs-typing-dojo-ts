@@ -7,6 +7,7 @@ interface GameScreenWrapperProps {
   onTitle: () => void;
   source: SentenceSource;
   apiKey?: string;
+  duration: number;
   soundEnabled: boolean;
 }
 
@@ -14,6 +15,7 @@ export function GameScreenWrapper({
   onTitle,
   source,
   apiKey,
+  duration,
   soundEnabled,
 }: GameScreenWrapperProps) {
   const { startGame } = useGame();
@@ -25,7 +27,7 @@ export function GameScreenWrapper({
     if (!startedRef.current) {
       startedRef.current = true;
       setLoading(source === 'api');
-      startGame(source, apiKey)
+      startGame(source, duration, apiKey)
         .catch((e: Error) => setError(e.message))
         .finally(() => setLoading(false));
     }

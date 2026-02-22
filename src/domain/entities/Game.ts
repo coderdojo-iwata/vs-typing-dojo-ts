@@ -17,17 +17,19 @@ export interface Game {
   readonly state: GameState;
   readonly player1: Player;
   readonly player2: Player;
+  readonly duration: number;
   readonly remainingTime: number;
   readonly sentences: Sentence[];
   readonly lastValidation?: LastValidation;
 }
 
-export function createGame(sentences: Sentence[]): Game {
+export function createGame(sentences: Sentence[], duration: number = GAME_CONFIG.DURATION_SECONDS): Game {
   return {
     state: 'idle',
     player1: createPlayer(1),
     player2: createPlayer(2),
-    remainingTime: GAME_CONFIG.DURATION_SECONDS,
+    duration,
+    remainingTime: duration,
     sentences,
   };
 }

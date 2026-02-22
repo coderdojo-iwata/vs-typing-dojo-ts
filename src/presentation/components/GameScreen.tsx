@@ -77,6 +77,7 @@ export function GameScreen({ onTitle, soundEnabled }: GameScreenProps) {
           player2={game.player2}
           winner={winner}
           remainingTime={game.remainingTime}
+          duration={game.duration}
           onRestart={restartGame}
           onTitle={handleTitle}
         />

@@ -1,16 +1,19 @@
 import type { SentenceSource } from '../../shared/types';
+import { GAME_DURATION_OPTIONS, type GameDuration } from '../../shared/gameConfig';
 import { useApiKey } from '../hooks/useApiKey';
 import { ApiKeyInput } from './ApiKeyInput';
 import { useState } from 'react';
 
 interface TitleScreenProps {
-  onStart: (source: SentenceSource, apiKey?: string) => void;
+  onStart: (source: SentenceSource, duration: GameDuration, apiKey?: string) => void;
+  initialDuration: GameDuration;
   soundEnabled: boolean;
   onToggleSound: () => void;
 }
 
-export function TitleScreen({ onStart, soundEnabled, onToggleSound }: TitleScreenProps) {
+export function TitleScreen({ onStart, initialDuration, soundEnabled, onToggleSound }: TitleScreenProps) {
   const [source, setSource] = useState<SentenceSource>('local');
+  const [duration, setDuration] = useState<GameDuration>(initialDuration);
   const { apiKey, saveApiKey, clearApiKey, hasApiKey } = useApiKey();
 
   const canStart = source === 'local' || hasApiKey;
@@ -53,6 +56,25 @@ export function TitleScreen({ onStart, soundEnabled, onToggleSound }: TitleScree
         )}
 
         <div className="space-y-2">
+          <p className="text-sm text-gray-400">ゲーム時間</p>
+          <div className="flex gap-2">
+            {GAME_DURATION_OPTIONS.map((opt) => (
+              <button
+                key={opt}
+                onClick={() => setDuration(opt)}
+                className={`flex-1 py-2 rounded-lg font-bold text-sm transition-colors ${
+                  duration === opt
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                }`}
+              >
+                {opt}秒
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-2">
           <p className="text-sm text-gray-400">サウンド</p>
           <label className="flex items-center gap-2 cursor-pointer" onClick={onToggleSound}>
             <span className="text-xl">{soundEnabled ? '🔊' : '🔇'}</span>
@@ -63,7 +85,7 @@ export function TitleScreen({ onStart, soundEnabled, onToggleSound }: TitleScree
 
       <button
         onClick={() =>
-          onStart(source, source === 'api' ? apiKey : undefined)
+          onStart(source, duration, source === 'api' ? apiKey : undefined)
         }
         disabled={!canStart}
         className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white text-xl font-bold py-4 px-12 rounded-lg transition-colors"

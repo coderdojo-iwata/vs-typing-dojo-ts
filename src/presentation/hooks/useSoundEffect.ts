@@ -14,6 +14,20 @@ function playBeep(ctx: AudioContext, frequency: number, duration: number, startT
   osc.stop(startTime + duration);
 }
 
+function playPop(ctx: AudioContext, startTime: number) {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.type = 'triangle';
+  osc.frequency.setValueAtTime(1200, startTime);
+  osc.frequency.exponentialRampToValueAtTime(800, startTime + 0.04);
+  gain.gain.setValueAtTime(0.3, startTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.04);
+  osc.start(startTime);
+  osc.stop(startTime + 0.04);
+}
+
 function playSound(ctx: AudioContext, lastValidation: LastValidation) {
   const now = ctx.currentTime;
   const { result, sentenceCompleted, noMiss } = lastValidation;
@@ -28,8 +42,8 @@ function playSound(ctx: AudioContext, lastValidation: LastValidation) {
     playBeep(ctx, 660, 0.1, now);
     playBeep(ctx, 880, 0.12, now + 0.1);
   } else if (result === 'correct' || result === 'partial') {
-    // 正しい入力: 短いビープ
-    playBeep(ctx, 660, 0.06, now);
+    // 正しい入力: ポップ音
+    playPop(ctx, now);
   } else {
     // 不正解: 下降ブザー
     const osc = ctx.createOscillator();

@@ -11,7 +11,7 @@ import { shuffle } from '../../shared/shuffle';
 import type { Sentence } from '../../domain/entities/Sentence';
 
 export type GameAction =
-  | { type: 'INIT'; sentences: Sentence[] }
+  | { type: 'INIT'; sentences: Sentence[]; duration: number }
   | { type: 'START_COUNTDOWN' }
   | { type: 'START_GAME' }
   | { type: 'TICK' }
@@ -22,7 +22,7 @@ export type GameAction =
 export function gameReducer(state: Game, action: GameAction): Game {
   switch (action.type) {
     case 'INIT':
-      return createGame(action.sentences);
+      return createGame(action.sentences, action.duration);
     case 'START_COUNTDOWN':
       return startCountdown(state);
     case 'START_GAME':
@@ -38,7 +38,7 @@ export function gameReducer(state: Game, action: GameAction): Game {
     case 'END_GAME':
       return finish(state);
     case 'RESET':
-      return createGame(shuffle(state.sentences));
+      return createGame(shuffle(state.sentences), state.duration);
     default:
       return state;
   }
