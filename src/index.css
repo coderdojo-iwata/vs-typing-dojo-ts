@@ -2,6 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes gaming-rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gaming-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px #ff00ff) drop-shadow(0 0 16px #ff00aa);
+  }
+  25% {
+    filter: drop-shadow(0 0 8px #00ffff) drop-shadow(0 0 16px #0088ff);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px #ffff00) drop-shadow(0 0 16px #ff8800);
+  }
+  75% {
+    filter: drop-shadow(0 0 8px #00ff88) drop-shadow(0 0 16px #00ffff);
+  }
+}
+
+.gaming-title {
+  background: linear-gradient(
+    270deg,
+    #ff0000,
+    #ff7700,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0088ff,
+    #aa00ff,
+    #ff00aa,
+    #ff0000
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation:
+    gaming-rainbow 4s ease infinite,
+    gaming-glow 4s ease infinite;
+}
+
 @keyframes countdown-shrink {
   0% {
     transform: scale(2);
