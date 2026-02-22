@@ -9,6 +9,8 @@ export type GameState = 'idle' | 'countdown' | 'playing' | 'finished';
 export interface LastValidation {
   playerId: 1 | 2;
   result: ValidationResult;
+  sentenceCompleted?: boolean;
+  noMiss?: boolean;
 }
 
 export interface Game {

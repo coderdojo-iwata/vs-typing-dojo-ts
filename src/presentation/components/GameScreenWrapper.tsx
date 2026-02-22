@@ -7,12 +7,14 @@ interface GameScreenWrapperProps {
   onTitle: () => void;
   source: SentenceSource;
   apiKey?: string;
+  soundEnabled: boolean;
 }
 
 export function GameScreenWrapper({
   onTitle,
   source,
   apiKey,
+  soundEnabled,
 }: GameScreenWrapperProps) {
   const { startGame } = useGame();
   const startedRef = useRef(false);
@@ -51,5 +53,5 @@ export function GameScreenWrapper({
     );
   }
 
-  return <GameScreen onTitle={onTitle} />;
+  return <GameScreen onTitle={onTitle} soundEnabled={soundEnabled} />;
 }

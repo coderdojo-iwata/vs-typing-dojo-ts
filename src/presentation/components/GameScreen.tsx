@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useGame } from '../hooks/useGame';
 import { useKeyboardInput } from '../hooks/useKeyboardInput';
+import { useSoundEffect } from '../hooks/useSoundEffect';
 import { Timer } from './Timer';
 import { PlayerArea } from './PlayerArea';
 import { ResultModal } from './ResultModal';
@@ -9,9 +10,10 @@ import { GAME_CONFIG } from '../../shared/gameConfig';
 
 interface GameScreenProps {
   onTitle: () => void;
+  soundEnabled: boolean;
 }
 
-export function GameScreen({ onTitle }: GameScreenProps) {
+export function GameScreen({ onTitle, soundEnabled }: GameScreenProps) {
   const { game, dispatch, restartGame, resetGame, countdownValue, winner } =
     useGame();
   const [flashPlayer1, setFlashPlayer1] = useState(false);
@@ -19,6 +21,7 @@ export function GameScreen({ onTitle }: GameScreenProps) {
   const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useKeyboardInput(dispatch, game.state === 'playing');
+  useSoundEffect(game.lastValidation, soundEnabled);
 
   useEffect(() => {
     if (!game.lastValidation) return;

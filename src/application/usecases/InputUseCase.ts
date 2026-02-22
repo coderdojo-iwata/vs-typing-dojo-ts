@@ -35,13 +35,14 @@ function updateGameWithPlayer(
   game: Game,
   playerId: 1 | 2,
   player: Player,
-  validation: ValidationResult
+  validation: ValidationResult,
+  extra?: { sentenceCompleted?: boolean; noMiss?: boolean }
 ): Game {
   const updated =
     playerId === 1
       ? { ...game, player1: player }
       : { ...game, player2: player };
-  return { ...updated, lastValidation: { playerId, result: validation } };
+  return { ...updated, lastValidation: { playerId, result: validation, ...extra } };
 }
 
 export function processInput(game: Game, key: string): InputResult {
@@ -70,10 +71,19 @@ export function processInput(game: Game, key: string): InputResult {
     let scored = addScore(incrementCorrectTypes(player), 1);
     const isLastChunk = player.currentChunkIndex >= sentence.chunks.length - 1;
     if (isLastChunk) {
-      if (!scored.hasMissedCurrentSentence) {
+      const noMiss = !scored.hasMissedCurrentSentence;
+      if (noMiss) {
         scored = addScore(scored, GAME_CONFIG.NO_MISS_BONUS);
       }
       updatedPlayer = nextSentence(scored);
+      let updatedGame = updateGameWithPlayer(game, playerId, updatedPlayer, validation, {
+        sentenceCompleted: true,
+        noMiss,
+      });
+      if (updatedPlayer.currentSentenceIndex >= game.sentences.length) {
+        updatedGame = { ...updatedGame, state: 'finished' };
+      }
+      return { game: updatedGame, validation };
     } else {
       updatedPlayer = nextChunk(scored, newInput);
     }
