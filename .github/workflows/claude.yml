@@ -34,6 +34,35 @@ jobs:
             const isAdmin = data.permission === 'admin';
             core.setOutput('is-admin', String(isAdmin));
 
+  notify-no-permission:
+    needs: check-permission
+    if: needs.check-permission.outputs.is-admin == 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Post permission denied comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const actor = context.actor;
+            const message = `@${actor} Claude Actionsを実行するには管理者権限が必要です。\n管理者権限を持つユーザーに \`@claude\` とメンションするよう依頼してください。`;
+
+            let issueNumber;
+            if (context.eventName === 'issue_comment' || context.eventName === 'issues') {
+              issueNumber = context.payload.issue.number;
+            } else {
+              issueNumber = context.payload.pull_request.number;
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: message,
+            });
+
   claude:
     needs: check-permission
     if: needs.check-permission.outputs.is-admin == 'true'
