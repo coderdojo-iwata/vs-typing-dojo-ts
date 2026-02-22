@@ -26,7 +26,8 @@ jobs:
               repo: context.repo.repo,
               username: context.payload.pull_request.user.login,
             });
-            const isAdmin = data.permission === 'admin';
+            const allowed = ['admin', 'maintain', 'write'];
+            const isAdmin = allowed.includes(data.permission);
             core.setOutput('is-admin', String(isAdmin));
 
   claude-review:
