@@ -74,9 +74,10 @@ jobs:
 
             Note: The PR branch is already checked out in the current working directory.
 
-            Use `gh pr comment` for top-level feedback.
-            Use `mcp__github_inline_comment__create_inline_comment` to highlight specific code issues.
-            Only post GitHub comments - don't submit review text as messages.
+            Use ONLY `mcp__github_inline_comment__create_inline_comment` to post feedback as inline code comments.
+            Do NOT use `gh pr comment` or any other top-level PR comment method.
+            Do not output review text as messages - only post inline comments on the relevant code lines.
+            If feedback applies to the PR as a whole rather than a specific line, attach it to the first changed line of the most relevant file.
 
           claude_args: |
-            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr diff:*),Bash(gh pr view:*)"
