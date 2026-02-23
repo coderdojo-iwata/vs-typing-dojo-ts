@@ -31,6 +31,12 @@ describe('Game', () => {
       expect(game.remainingTime).toBe(30);
       expect(game.sentences).toBe(dummySentences);
     });
+
+    it('カスタム duration が設定される', () => {
+      const game = createGame(dummySentences, 10);
+      expect(game.duration).toBe(10);
+      expect(game.remainingTime).toBe(10);
+    });
   });
 
   describe('状態遷移', () => {
