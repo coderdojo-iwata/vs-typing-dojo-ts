@@ -43,7 +43,7 @@ export function useGame() {
   }, [dispatch, setCountdownValue]);
 
   const startGame = useCallback(
-    async (source: SentenceSource = 'local', duration: number, apiKey?: string) => {
+    async (source: SentenceSource, duration: number, apiKey?: string) => {
       const sentences = await initializeGame(source, apiKey);
       dispatch({ type: 'INIT', sentences, duration });
       startCountdownSequence();
