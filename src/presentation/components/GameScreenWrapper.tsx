@@ -31,7 +31,7 @@ export function GameScreenWrapper({
         .catch((e: Error) => setError(e.message))
         .finally(() => setLoading(false));
     }
-  }, [startGame, source, apiKey]);
+  }, [startGame, source, apiKey, duration]);
 
   if (error) {
     return (
